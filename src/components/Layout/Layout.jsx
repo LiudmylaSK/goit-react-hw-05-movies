@@ -6,13 +6,17 @@ import styled from 'styled-components';
  const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  font-size: 20px;
+padding: 20px 50px;
+  font-size: 16px;
 
 `;
 
 const Link = styled(NavLink)`
+text-decoration: none;
+padding: 5px;
   &.active {
     color: blue;
+    
   }
 `;
 

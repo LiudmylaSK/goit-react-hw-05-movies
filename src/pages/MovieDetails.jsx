@@ -6,6 +6,9 @@ import { Button } from 'components/Button/Button';
 import { Loader } from 'components/Loader/Loader';
 import { PLACEHOLDER } from 'movies-api/constant-images';
 
+import styled from 'styled-components';
+
+
 
  const MovieDetails = () => {
   const { movieId } = useParams();
@@ -40,6 +43,20 @@ import { PLACEHOLDER } from 'movies-api/constant-images';
         <Button text="Go back" />
       </Link>
      
+      <WrapperStyled>
+        
+         
+          <img
+            src={
+              movieDetails.poster_path
+                ? `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`
+                : `${PLACEHOLDER}`
+            }
+          alt={movieDetails.title}
+          height='500'
+          />
+     
+
         <div>
           <h1>{movieDetails.title}</h1>
           <h4>User score: {roundedPopularity}%</h4>
@@ -51,25 +68,14 @@ import { PLACEHOLDER } from 'movies-api/constant-images';
               <span key={genre.id}> {genre.name}</span>
             ))}
           </p>
-        
         </div>
-        <div>
-          <img
-            src={
-              movieDetails.poster_path
-                ? `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`
-                : `${PLACEHOLDER}`
-            }
-            alt={movieDetails.title}
-          />
-        </div>
-     
+     </WrapperStyled>
     
       <h3>Additional information</h3>
-      <Link to="cast">
+      <Link to="Cast">
         <Button text="Cast" />
       </Link>
-      <Link to="reviews">
+      <Link to="Reviews">
         <Button text="Reviews" />
       </Link>
       
@@ -81,3 +87,7 @@ import { PLACEHOLDER } from 'movies-api/constant-images';
 };
 
 export default MovieDetails;
+
+const WrapperStyled = styled.div`
+  display: flex;
+  gap: 12px;`

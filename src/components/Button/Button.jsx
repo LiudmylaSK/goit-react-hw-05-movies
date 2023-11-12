@@ -3,11 +3,13 @@ import styled from "styled-components";
 const Btn = styled.button`
  
   padding: 10px 15px;
+margin: 10px;
+
   font-size: 16px;
   background-color: #007bff;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
 
   
