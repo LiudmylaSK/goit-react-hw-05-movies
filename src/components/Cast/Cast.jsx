@@ -38,7 +38,7 @@ import { Loader } from "components/Loader/Loader";
      <>
         {loading && <Loader />}
       {error && <p>Something went wrong...</p>}
-      {!loading && !error && (
+       {!loading && !error && cast.length > 0 ? (
         <WrapperStyled>
             {cast.map(({ id, profile_path, original_name, character }) => (
               <ActorCard key={id}>
@@ -56,7 +56,9 @@ import { Loader } from "components/Loader/Loader";
               </ActorCard>
             ))}
           </WrapperStyled>
-   )}
+  ) : (
+      <p>No actors found for this movie</p>
+    )}
    </>
   );
 };

@@ -35,7 +35,11 @@ import styled from 'styled-components';
     movieDetails();
   }, [movieId]);
 
-   
+   if (loading) {
+     return <Loader />
+   }
+
+  
   if (!movieDetails) {
     return <Loader />;
   }
@@ -52,8 +56,10 @@ import styled from 'styled-components';
       <Link to={backButton.current}>
         <Button text="Go back" />
       </Link>
-     
-      <WrapperStyled>
+       {loading ? (
+      <Loader />
+    ) : movieDetails ? (
+        <WrapperStyled>
     
           <img
             src={
@@ -61,24 +67,27 @@ import styled from 'styled-components';
                 ? `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`
                 : `${PLACEHOLDER}`
             }
-          alt={movieDetails.title}
-          height='500'
+            alt={movieDetails.title}
+            height='500'
           />
      
 
-        <div>
-          <h1>{movieDetails.title}</h1>
-          <h4>User score: {roundedPopularity}%</h4>
-          <h2>Overview</h2>
-          <p>{movieDetails.overview}</p>
-          <h2>Genres</h2>
-          <p>
-            {movieDetails.genres.map(genre => (
-              <span key={genre.id}> {genre.name}</span>
-            ))}
-          </p>
-        </div>
-     </WrapperStyled>
+          <div>
+            <h1>{movieDetails.title}</h1>
+            <h4>User score: {roundedPopularity}%</h4>
+            <h2>Overview</h2>
+            <p>{movieDetails.overview}</p>
+            <h2>Genres</h2>
+            <p>
+              {movieDetails.genres.map(genre => (
+                <span key={genre.id}> {genre.name}</span>
+              ))}
+            </p>
+          </div>
+        </WrapperStyled>
+          ) : (
+      <p>No movie details available</p>
+    )}
     
       <h3>Additional information</h3>
       <Link to="Cast">
