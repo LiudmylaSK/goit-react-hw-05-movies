@@ -1,78 +1,27 @@
-// import React, { useEffect, useState } from 'react';
-// import { useParams } from 'react-router-dom';
-// import { fetchMovieReviews } from 'movies-api/Api';
-// import Loader from './Loader';
-
-// export const Reviews = () => {
-//   const { movieId } = useParams();
-//   const [reviews, setReviews] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-
-//   useEffect(() => {
-//     const fetchReviews = async () => {
-//       try {
-//         const response = await fetchMovieReviews(movieId);
-//         setReviews(response);
-//       } catch (error) {
-//         setError(error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchReviews();
-//   }, [movieId]);
-
-//   if (loading) {
-//     return <Loader />;
-//   }
-
-//   if (error) {
-//     return <div>Error fetching reviews: {error.message || error.toString()}</div>
-// ;
-//   }
-
-//   return (
-//     <>
-//       {reviews.length !== 0 ? (
-//         <div>
-//           <h2>Movie reviews</h2>
-//           <ul>
-//             {reviews.map((review) => (
-//               <li key={review.id}>
-//                 <p>{review.author}</p>
-//                 <p>{review.content}</p>
-//               </li>
-//             ))}
-//           </ul>
-//         </div>
-//       ) : (
-//         <div>There are no reviews for this movie yet</div>
-//       )}
-//     </>
-//   );
-// };
-
-
-
 
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMovieReviews } from 'movies-api/Api';
+import { Loader } from 'components/Loader/Loader';
 
  const Reviews = () => {
   const { movieId } = useParams();
-  const [reviews, setReviews] = useState([]);
+   const [reviews, setReviews] = useState([]);
+   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const movieReviews = async () => {
       try {
+        setLoading(true);
         const response = await fetchMovieReviews(movieId);
         setReviews(response);
       } catch (error) {
         console.error(error);
+           setError(error);
+      } finally {
+        setLoading(false)
       }
     };
 
@@ -81,6 +30,8 @@ import { fetchMovieReviews } from 'movies-api/Api';
 
   return (
     <>
+      {loading && <Loader />}
+      {error && <p>Something went wrong...</p>}
       {reviews.length > 0 && (
         <div>
           <h2>Movie reviews</h2>
@@ -94,7 +45,7 @@ import { fetchMovieReviews } from 'movies-api/Api';
           </ul>
         </div>
       )}
-      {reviews.length === 0 && (
+      {reviews.length === 0 && !loading && !error && (
         <div>There are no reviews for this movie yet</div>
       )}
     </>

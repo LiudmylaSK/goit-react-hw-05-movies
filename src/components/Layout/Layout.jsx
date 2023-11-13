@@ -3,20 +3,18 @@ import { NavLink, Outlet } from "react-router-dom";
 import { Loader } from "components/Loader/Loader";
 import styled from 'styled-components';
 
- const Container = styled.div`
+ const Container = styled.main`
   max-width: 1200px;
   margin: 0 auto;
-padding: 20px 50px;
+  padding: 20px 50px;
   font-size: 16px;
-
 `;
 
 const Link = styled(NavLink)`
-text-decoration: none;
-padding: 5px;
+  text-decoration: none;
+  padding: 5px;
   &.active {
-    color: blue;
-    
+  color: blue; 
   }
 `;
 

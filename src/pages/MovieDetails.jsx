@@ -12,30 +12,40 @@ import styled from 'styled-components';
 
  const MovieDetails = () => {
   const { movieId } = useParams();
-  const [movieDetails, setMovieDetails] = useState(null);
+   const [movieDetails, setMovieDetails] = useState(null);
+   const [loading, setLoading] = useState(false);
+   const [error, setError] = useState(null);
   const location = useLocation();
   const backButton = useRef(location.state?.from || '/');
 
   useEffect(() => {
     const movieDetails = async () => {
       try {
+        setLoading(true);
         const movie = await fetchMovieDetails(movieId);
         setMovieDetails(movie);
       } catch (error) {
         console.error(error);
+        setError(error);
+      } finally {
+        setLoading(false);
       }
     };
 
     movieDetails();
   }, [movieId]);
 
+   
   if (!movieDetails) {
     return <Loader />;
   }
 
-  
+   if (error) {
+    return <p>Something went wrong...</p>
+  }
 
-  const roundedPopularity = Math.round(movieDetails.vote_average * 10);
+  const roundedPopularity = movieDetails.vote_average
+  ? Math.round(movieDetails.vote_average * 10) : 0;
 
   return (
     <main>
@@ -44,8 +54,7 @@ import styled from 'styled-components';
       </Link>
      
       <WrapperStyled>
-        
-         
+    
           <img
             src={
               movieDetails.poster_path
