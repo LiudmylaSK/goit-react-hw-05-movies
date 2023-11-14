@@ -1,37 +1,14 @@
-import { fetchSearch } from 'movies-api/Api';
+
 import React, { useState } from 'react';
-import { Loader } from 'components/Loader/Loader';
 
 export const SearchForm = ({ setSearchParams }) => {
   const [query, setQuery] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [noResults, setNoResults] = useState(false);
 
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = event => {
     event.preventDefault();
-    setLoading(true);
 
-    try {
-      const result = await fetchSearch(query);
-
-      if (result.length === 0) {
-        setNoResults(true);
-        setSearchParams({ query, result: [] });
-      } else {
-        setNoResults(false);
-        setSearchParams({ query, result });
-      }
-    } catch (error) {
-      console.error(error);
-      setError('Something went wrong...');
-    } finally {
-      setLoading(false);
-    }
+    setSearchParams({ query });
   };
-
- 
 
   return (
     <form onSubmit={handleSubmit}>
@@ -46,11 +23,7 @@ export const SearchForm = ({ setSearchParams }) => {
       <button type="submit" disabled={!query} aria-label="Submit search">
         Search
       </button>
-        {loading && <Loader />}
-      {error && <p>{error}</p>}
-      {noResults && <p>No movie found with that title. Please check the request</p>}
     </form>
   );
 };
-
 
